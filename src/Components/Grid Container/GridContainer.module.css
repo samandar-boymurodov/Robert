@@ -1,0 +1,8 @@
+.Container {
+    display: flex;
+    margin: auto;
+    box-sizing: border-box;
+    flex-flow: row wrap;
+    width: 306px;
+    height: 306px;
+}
