@@ -6,4 +6,10 @@
     font-family: sans-serif;
     font-size: 5.5rem;
     text-align: center;
+    transition: background-color 0.5s;
+    cursor: pointer;
+}
+
+.box:hover {
+    background-color: cornsilk;
 }

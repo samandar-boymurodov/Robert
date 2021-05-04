@@ -1,0 +1,13 @@
+.robert {
+    font-family: sans-serif;
+    text-align: center;
+    margin: auto;
+    margin-top: 1.5rem;
+    background-color: burlywood;
+    width: 19.3rem;
+    box-sizing: border-box;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 3px;
+    font-weight: 500;
+}

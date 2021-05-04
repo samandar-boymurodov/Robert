@@ -1,11 +1,19 @@
 import React, {useRef, useEffect, useState} from 'react'
 import Grid from '../Grid/Grid'
+import Robert from '../Robert/Robert'
 import classes from './GridContainer.module.css'
-import { status } from './status'
+import { locateX, locateY, processChecker, status, winnerStatus } from './utils/'
+
 
 export default () => {
     const [nodesState, setNodesState] = useState(null)
     const [nodeData, setNodData] = useState(null)
+    const [time, setTime] = useState(false)
+    const [live, setLive] = useState(true)
+    const [winnerDeterminer, setWinnerDeterminer] = useState(null)
+    const [turn, setTurn] = useState(null)
+    const [turnCounter, setTurnCounter] = useState(0)
+
 
     const containerRef = useRef()
 
@@ -29,33 +37,83 @@ export default () => {
     }, [])
 
     useEffect(() => {
-        console.log(nodesState)
-    }, [nodesState])
+        if (winnerDeterminer) {
+            setTurn(null)
+        }
+    }, [winnerDeterminer])
 
     useEffect(() => {
-        if (nodeData) {
-            let nodesStateCopy = [...nodesState]
+        let timeoutId
+        let checkGame
+        if (live) {
+            if (!time) {
+                if (nodeData) {
+                    let resX = locateX(nodeData, nodesState)
+                    if (resX) {
+                        setNodesState([...resX])
+                        nodeData.node.target.innerHTML = status.x
 
-            if (nodesState[nodeData.index].status !== status.unTouched) {
-               
-            } else {
-                nodesStateCopy[nodeData.index] = {
-                    ...nodesStateCopy[nodeData.index],
-                    status: status.x
-                }
+                        checkGame = processChecker(resX, status.x)
+                        if (checkGame) {
+                            setWinnerDeterminer(checkGame)
+                            setLive(false)
+                            return
+                        }
 
-                nodeData.node.target.innerHTML = status.x
+                        setTime(true)
+                        setTurn(status.y)
+                        setTurnCounter((prevCount) => prevCount +1)
 
-                setNodesState([...nodesStateCopy])
+                        timeoutId = setTimeout(() => {
+                            let resY = locateY(resX)
+                            if (resY) {
+                                let [indexY, nodesCopy] = resY
+
+                                nodesCopy[indexY].node.innerHTML = status.y
+
+                                checkGame = processChecker([...nodesCopy], status.y)
+                                if (checkGame) {
+                                    console.log(checkGame)
+                                    setLive(false)
+                                    setWinnerDeterminer(checkGame)
+                                    return
+                                }
+
+                                setNodesState([...nodesCopy])
+                            } else {
+                                console.log("Draw")
+                                setLive(false)
+                                setWinnerDeterminer(winnerStatus.draw)
+                                setTime(null)
+                                setTurn(null)
+                                return
+                            }
+                            setTime(null)
+                            setTurn(status.x)
+                            setTurnCounter((prevCount) => prevCount +1)
+                        }, turnCounter <= 2 ? 1000 : 800);
+                    }
+                } 
             }
         }
-        
-    }, [nodeData])
+        return () => {
+            if (!live) {
+                clearTimeout(timeoutId)
+            }
+            
+        }
+    }, [nodeData, time, live])
     return (
-        <div 
-            className = {classes.Container}
-            ref = {containerRef}>
-            {[...new Array(9)].map((el, index) => <Grid key = {index} />)}
+        <div>
+            <div 
+                className = {classes.Container}
+                ref = {containerRef}>
+                {[...new Array(9)].map((el, index) => <Grid key = {index} />)}
+            </div>
+            <Robert 
+                winner = {winnerDeterminer}
+                stopGreeting = {true ? nodeData : false}
+                turn = {turn}/>
         </div>
     )
 }
