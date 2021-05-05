@@ -7,7 +7,7 @@ export const RobertData = {
             "Hi, Let's play a game"
         ],
         restartGameStart: ["So, Let's move!",
-            "This game, I will win You",
+            "This game, I'll win You",
             "I'd like to play with you again",
             "Let's play again",
             "You are a good opponent"

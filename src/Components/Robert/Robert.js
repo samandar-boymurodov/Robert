@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './robert.module.css'
-import {RobertData} from './robertData'
-import {randomChoice} from '../Grid Container/utils/randomChoice'
+import { RobertData } from './robertData'
+import { randomChoice } from '../Grid Container/utils/randomChoice'
 import Fade from '@material-ui/core/Fade';
 import ReplayIcon from '@material-ui/icons/Replay';
 
@@ -35,8 +35,13 @@ export default React.memo((props) => {
         return null
     }, [stopGreeting, isRestart])
 
+    let robertStyle = classes.robert
+
+    if (winner) {
+        robertStyle += " " + classes.winnerMode
+    }
     return (
-        <div className = {classes.robert}>
+        <div className = {robertStyle}>
             {!!greetingComputer && (
                 <Fade in={!!greetingComputer}>
                     <div>{greetingComputer}</div>

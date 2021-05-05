@@ -17,8 +17,12 @@
     padding-top: 5px;
 }
 
+.winnerMode {
+    background-color: #ADADAD;
+}
+
 .robert .winner .replay {
-    transition: font-size 0.5s;
+    transition: font-size 0.2s;
     cursor: pointer;
     color: chocolate;
     padding-top: 5px;
