@@ -1,12 +1,12 @@
 import React from 'react'
 import classes from './robert.module.css'
 import {RobertData} from './robertData'
-import {randomChoice} from './randomChoice'
+import {randomChoice} from '../Grid Container/utils/randomChoice'
 import Fade from '@material-ui/core/Fade';
 import ReplayIcon from '@material-ui/icons/Replay';
 
 export default React.memo((props) => {
-    const {winner, turn} = props
+    const {winner, turn, reTry} = props
     let greetingContext = randomChoice(RobertData.greeting)
 
     const winnerComputer = React.useMemo(() => {
@@ -33,12 +33,16 @@ export default React.memo((props) => {
             <Fade in = {true ? typeof turnComputer === "string" : false}>
                 <div>{turnComputer}</div>
             </Fade>
-            <Fade in = {true ? typeof winnerComputer === "string" : false}>
-                <div>
-                    <div>{winnerComputer}</div>
-                    <ReplayIcon />
-                </div>
-            </Fade>
+            {winnerComputer ? (
+                <Fade in = {true ? typeof winnerComputer === "string" : false}>
+                    <div className = {classes.winner}>
+                        <div>{winnerComputer}</div>
+                        <div onClick = {reTry}>
+                         <ReplayIcon className = {classes.replay} />
+                        </div>
+                    </div>
+                </Fade>
+            ) : null}
         </div>
     )
 })  

@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState} from 'react'
+import  {useRef, useEffect, useState, useCallback} from 'react'
 import Grid from '../Grid/Grid'
 import Robert from '../Robert/Robert'
 import classes from './GridContainer.module.css'
@@ -6,6 +6,7 @@ import { locateX, locateY, processChecker, status, winnerStatus } from './utils/
 import {ErrorBoundary} from '../Error Boundary/ErrorBoundary'
 
 export default () => {
+    // Essential states
     const [nodesState, setNodesState] = useState(null)
     const [nodeData, setNodData] = useState(null)
     const [time, setTime] = useState(false)
@@ -17,31 +18,19 @@ export default () => {
 
     const containerRef = useRef()
 
+    // Initiliaze nodes(grids)
     useEffect(() => {
-        let state = []
-        for (let [index, el] of Object.entries(containerRef.current.children)) {
-            state.push({
-                node: el,
-                status: status.unTouched,
-            })
-
-            el.addEventListener("click", (e) => {
-                setNodData({
-                    index: +index,
-                    node: e
-                })
-            })
-        }
-
-        setNodesState(state)
+        initNodes()
     }, [])
 
+    // disable turn if winner is present
     useEffect(() => {
         if (winnerDeterminer) {
             setTurn(null)
         }
     }, [winnerDeterminer])
 
+    // main part od Game, whhere integartion with user and Robert is made
     useEffect(() => {
         let timeoutId
         let checkGame
@@ -73,9 +62,11 @@ export default () => {
 
                                 checkGame = processChecker([...nodesCopy], status.y)
                                 if (checkGame) {
-                                    console.log(checkGame)
                                     setLive(false)
                                     setWinnerDeterminer(checkGame)
+                                    setTurnCounter(0)
+                                    setTurn(0)
+                                    setTime(null)
                                     return
                                 }
 
@@ -96,6 +87,7 @@ export default () => {
                 } 
             }
         }
+        // clearTimeOut when game is over(for Optimization)
         return () => {
             if (!live) {
                 clearTimeout(timeoutId)
@@ -104,10 +96,34 @@ export default () => {
         }
     }, [nodeData, time, live])
 
-    const reTry = () =>{
-        console.log("retry is called")
-    }
+    // this function is trigerred when games starts or restarts
+    const initNodes = useCallback(() => {
+        let state = []
+        for (let [index, el] of Object.entries(containerRef.current.children)) {
+            el.innerHTML = ""
+            state.push({
+                node: el,
+                status: status.unTouched,
+            })
+
+            el.addEventListener("click", (e) => {
+                setNodData({
+                    index: +index,
+                    node: e
+                })
+            })
+        }
+
+        setNodesState(state)
+        setNodData(null)
+        setLive(true)
+        setWinnerDeterminer(null)
+        setTurn(null)
+        setTurnCounter(0)
+    }, [])
+
     return (
+        // ErrorBoundary is added to prevent any potential errors
         <ErrorBoundary>
             <div>
                 <div 
@@ -119,7 +135,7 @@ export default () => {
                     winner = {winnerDeterminer}
                     stopGreeting = {true ? nodeData : false}
                     turn = {turn}
-                    reTry = {reTry}
+                    reTry = {initNodes}
                     />
             </div>
         </ErrorBoundary>

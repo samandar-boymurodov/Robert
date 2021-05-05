@@ -11,3 +11,19 @@
     border-radius: 3px;
     font-weight: 500;
 }
+
+.robert .winner {
+    align-items: center;
+    padding-top: 5px;
+}
+
+.robert .winner .replay {
+    transition: font-size 0.5s;
+    cursor: pointer;
+    color: chocolate;
+    padding-top: 5px;
+}
+
+.robert .winner .replay:hover {
+    font-size: 1.7rem;
+}
