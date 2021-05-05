@@ -1,7 +1,16 @@
 import { winnerStatus } from '../Grid Container/utils/index'
 
 export const RobertData = {
-    greeting: ["Hi, my name is Robert", "Hello", "Hi, Let's play a game"],
+    greeting: {
+        gameStart: ["Hi, my name is Robert",
+            "Hello",
+            "Hi, Let's play a game"
+        ],
+        restartGameStart: ["So, Let's move!",
+            "This game, I will win You",
+            "You are a good opponent."
+        ]
+    },
     winner: {
         [winnerStatus.x]: ["You Won!",
             "You are Amazing!",

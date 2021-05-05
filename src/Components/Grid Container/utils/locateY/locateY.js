@@ -15,12 +15,14 @@ export const locateY = (nodesState) => {
             const YIndexResult = YindexGenerator(nodesState)
 
             let nodesStateCopy = [...nodesState]
+            let nodeCopy = nodesStateCopy[YIndexResult].node
 
+            nodeCopy.innerHTML = status.y
             nodesStateCopy[YIndexResult] = {
-                ...nodesStateCopy[YIndexResult],
+                node: nodeCopy,
                 status: status.y
             }
-            return [YIndexResult, nodesStateCopy]
+            return nodesStateCopy
 
         } else {
             return false

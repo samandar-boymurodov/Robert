@@ -1,11 +1,22 @@
-import  {useRef, useEffect, useState, useCallback} from 'react'
+import  { lazy,
+    Suspense, 
+    useRef, 
+    useEffect, 
+    useState, 
+    useCallback } from 'react'
 import Grid from '../Grid/Grid'
-import Robert from '../Robert/Robert'
 import classes from './GridContainer.module.css'
-import { locateX, locateY, processChecker, status, winnerStatus } from './utils/'
-import {ErrorBoundary} from '../Error Boundary/ErrorBoundary'
+import { locateX, 
+    locateY, 
+    processChecker, 
+    status, 
+    winnerStatus } from './utils/'
+import { ErrorBoundary } from '../Error Boundary/ErrorBoundary'
+
+const Robert = lazy(() => import('../Robert/Robert'))
 
 export default () => {
+
     // Essential states
     const [nodesState, setNodesState] = useState(null)
     const [nodeData, setNodData] = useState(null)
@@ -14,6 +25,7 @@ export default () => {
     const [winnerDeterminer, setWinnerDeterminer] = useState(null)
     const [turn, setTurn] = useState(null)
     const [turnCounter, setTurnCounter] = useState(0)
+    const [restart, setRestart] = useState(false)
 
 
     const containerRef = useRef()
@@ -23,10 +35,11 @@ export default () => {
         initNodes()
     }, [])
 
-    // disable turn if winner is present
+    // disable turn if winner is present and set restart to true
     useEffect(() => {
         if (winnerDeterminer) {
             setTurn(null)
+            setRestart(true)
         }
     }, [winnerDeterminer])
 
@@ -40,7 +53,6 @@ export default () => {
                     let resX = locateX(nodeData, nodesState)
                     if (resX) {
                         setNodesState([...resX])
-                        nodeData.node.target.innerHTML = status.x
 
                         checkGame = processChecker(resX, status.x)
                         if (checkGame) {
@@ -56,9 +68,7 @@ export default () => {
                         timeoutId = setTimeout(() => {
                             let resY = locateY(resX)
                             if (resY) {
-                                let [indexY, nodesCopy] = resY
-
-                                nodesCopy[indexY].node.innerHTML = status.y
+                                let nodesCopy = resY
 
                                 checkGame = processChecker([...nodesCopy], status.y)
                                 if (checkGame) {
@@ -106,12 +116,15 @@ export default () => {
                 status: status.unTouched,
             })
 
-            el.addEventListener("click", (e) => {
-                setNodData({
-                    index: +index,
-                    node: e
+            // if previously restarted no event listener is attached
+            if (!restart) {
+                el.addEventListener("click", (e) => {
+                    setNodData({
+                        index: +index,
+                        node: e
+                    })
                 })
-            })
+            }
         }
 
         setNodesState(state)
@@ -131,12 +144,15 @@ export default () => {
                     ref = {containerRef}>
                     {[...new Array(9)].map((el, index) => <Grid key = {index} />)}
                 </div>
-                <Robert 
-                    winner = {winnerDeterminer}
-                    stopGreeting = {true ? nodeData : false}
-                    turn = {turn}
-                    reTry = {initNodes}
-                    />
+                <Suspense fallback = {<></>}>
+                    <Robert 
+                        winner = {winnerDeterminer}
+                        stopGreeting = {true ? nodeData : false}
+                        turn = {turn}
+                        reTry = {initNodes}
+                        isRestart = {restart}
+                        />
+                </Suspense>
             </div>
         </ErrorBoundary>
     )

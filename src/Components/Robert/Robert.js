@@ -6,8 +6,11 @@ import Fade from '@material-ui/core/Fade';
 import ReplayIcon from '@material-ui/icons/Replay';
 
 export default React.memo((props) => {
-    const {winner, turn, reTry} = props
-    let greetingContext = randomChoice(RobertData.greeting)
+    const { winner, 
+        turn, 
+        reTry, 
+        stopGreeting, 
+        isRestart } = props
 
     const winnerComputer = React.useMemo(() => {
         if (winner) {
@@ -23,18 +26,27 @@ export default React.memo((props) => {
         } else return null
     }, [turn])
 
+    const greetingComputer = React.useMemo(() => {
+        if (!stopGreeting) {
+            if (isRestart) return randomChoice(RobertData.greeting.restartGameStart)
+        }
+        if (!stopGreeting) return randomChoice(RobertData.greeting.gameStart)
+
+        return null
+    }, [stopGreeting, isRestart])
+
     return (
         <div className = {classes.robert}>
-            {!props.stopGreeting ? (
-                <Fade in={true ? !props.stopGreeting : false}>
-                    <div>{greetingContext}</div>
+            {!!greetingComputer && (
+                <Fade in={!!greetingComputer}>
+                    <div>{greetingComputer}</div>
                 </Fade>
-            ) : null}
-            <Fade in = {true ? typeof turnComputer === "string" : false}>
+            )}
+            <Fade in = {!!turnComputer}>
                 <div>{turnComputer}</div>
             </Fade>
-            {winnerComputer ? (
-                <Fade in = {true ? typeof winnerComputer === "string" : false}>
+            {!!winnerComputer && (
+                <Fade in = {!!winnerComputer}>
                     <div className = {classes.winner}>
                         <div>{winnerComputer}</div>
                         <div onClick = {reTry}>
@@ -42,7 +54,7 @@ export default React.memo((props) => {
                         </div>
                     </div>
                 </Fade>
-            ) : null}
+            )}
         </div>
     )
 })  
