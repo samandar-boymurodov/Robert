@@ -3,7 +3,7 @@ import Grid from '../Grid/Grid'
 import Robert from '../Robert/Robert'
 import classes from './GridContainer.module.css'
 import { locateX, locateY, processChecker, status, winnerStatus } from './utils/'
-
+import {ErrorBoundary} from '../Error Boundary/ErrorBoundary'
 
 export default () => {
     const [nodesState, setNodesState] = useState(null)
@@ -103,17 +103,25 @@ export default () => {
             
         }
     }, [nodeData, time, live])
+
+    const reTry = () =>{
+        console.log("retry is called")
+    }
     return (
-        <div>
-            <div 
-                className = {classes.Container}
-                ref = {containerRef}>
-                {[...new Array(9)].map((el, index) => <Grid key = {index} />)}
+        <ErrorBoundary>
+            <div>
+                <div 
+                    className = {classes.Container}
+                    ref = {containerRef}>
+                    {[...new Array(9)].map((el, index) => <Grid key = {index} />)}
+                </div>
+                <Robert 
+                    winner = {winnerDeterminer}
+                    stopGreeting = {true ? nodeData : false}
+                    turn = {turn}
+                    reTry = {reTry}
+                    />
             </div>
-            <Robert 
-                winner = {winnerDeterminer}
-                stopGreeting = {true ? nodeData : false}
-                turn = {turn}/>
-        </div>
+        </ErrorBoundary>
     )
 }

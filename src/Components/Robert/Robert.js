@@ -3,6 +3,7 @@ import classes from './robert.module.css'
 import {RobertData} from './robertData'
 import {randomChoice} from './randomChoice'
 import Fade from '@material-ui/core/Fade';
+import ReplayIcon from '@material-ui/icons/Replay';
 
 export default React.memo((props) => {
     const {winner, turn} = props
@@ -33,7 +34,10 @@ export default React.memo((props) => {
                 <div>{turnComputer}</div>
             </Fade>
             <Fade in = {true ? typeof winnerComputer === "string" : false}>
-                <div>{winnerComputer}</div>
+                <div>
+                    <div>{winnerComputer}</div>
+                    <ReplayIcon />
+                </div>
             </Fade>
         </div>
     )
