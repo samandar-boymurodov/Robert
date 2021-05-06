@@ -15,4 +15,4 @@
 
 - [LinkedIn](https://www.linkedin.com/in/boymurodov-samandar/)
 - [Telegram](http://t.me/boymurodovsamandar)
-- [StackOverFlow](https://stackoverflow.com/users/14190579/samandar)
+- [Stack Overflow](https://stackoverflow.com/users/14190579/samandar)
