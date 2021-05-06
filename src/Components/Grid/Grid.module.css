@@ -6,8 +6,8 @@
     font-family: sans-serif;
     font-size: 5.5rem;
     text-align: center;
-    transition: background-color 0.5s;
     cursor: pointer;
+    transition: background-color 0.5s;
 }
 
 .box:hover {

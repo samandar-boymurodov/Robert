@@ -1,7 +1,6 @@
-import GridContainer from './Components/Grid Container/GridContainer'
+import { GridContainer } from './Components/Grid Container/GridContainer'
 
-export default () => {
-
+export const App = () => {
     return (
         <GridContainer />
     )

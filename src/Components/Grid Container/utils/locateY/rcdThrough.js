@@ -8,7 +8,7 @@ export const rcdThrough = (arr, nodesState, st) => {
         }
     }
 
-    if (stS == 2) {
+    if (stS === 2) {
         for (let i of arr) {
             if (nodesState[i].status === status.unTouched) {
                 return i

@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './App';
+import { App } from './App';
 
 
 ReactDOM.render(
-        <App />,
-    document.getElementById('root'),
-    () => console.log("%cI am rendered", "color:green")
+      <App />,
+      document.getElementById('root'),
+      () => console.log("%cI am rendered", "color:green")
   );

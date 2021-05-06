@@ -14,8 +14,7 @@ export default React.memo((props) => {
 
     const winnerComputer = React.useMemo(() => {
         if (winner) {
-            let listWishes = RobertData.winner[winner]
-            return randomChoice(listWishes)
+            return randomChoice(RobertData.winner[winner])
         } else return null
     }, [winner])
 
@@ -42,20 +41,20 @@ export default React.memo((props) => {
     }
     return (
         <div className = {robertStyle}>
-            {!!greetingComputer && (
-                <Fade in={!!greetingComputer}>
-                    <div>{greetingComputer}</div>
-                </Fade>
-            )}
+            <Fade in={!!greetingComputer}>
+                <div>{greetingComputer}</div>
+            </Fade>
+           
             <Fade in = {!!turnComputer}>
                 <div>{turnComputer}</div>
             </Fade>
+
             {!!winnerComputer && (
                 <Fade in = {!!winnerComputer}>
                     <div className = {classes.winner}>
                         <div>{winnerComputer}</div>
                         <div onClick = {reTry}>
-                         <ReplayIcon className = {classes.replay} />
+                            <ReplayIcon className = {classes.replay} />
                         </div>
                     </div>
                 </Fade>
