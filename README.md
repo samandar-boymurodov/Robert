@@ -1,6 +1,8 @@
 ## Tic-Tac-Toe Game
 > This is a simple Tic-Tact-Toe game made using React and Javascript.
+> 
 > I added algorithms of moderate difficulty  and named them **Robert**
+> 
 > See live Demo - [Robert Game](https://robert-game.netlify.app/)
 
 ## To run this App
@@ -13,4 +15,4 @@
 
 - [LinkedIn](https://www.linkedin.com/in/boymurodov-samandar/)
 - [Telegram](http://t.me/boymurodovsamandar)
-- [StackOverFlow](https://stackoverflow.com/users/14190579/samandar)
+- [Stack Overflow](https://stackoverflow.com/users/14190579/samandar)
