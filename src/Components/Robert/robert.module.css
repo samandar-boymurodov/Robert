@@ -1,33 +1,36 @@
 .robert {
-    font-family: sans-serif;
-    text-align: center;
-    margin: auto;
-    margin-top: 1.5rem;
-    background-color: burlywood;
-    width: 19.3rem;
-    box-sizing: border-box;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border-radius: 3px;
-    font-weight: 500;
+  font-family: sans-serif;
+  text-align: center;
+  margin: auto;
+  margin-top: 1.5rem;
+  background-color: burlywood;
+  width: 19.3rem;
+  box-sizing: border-box;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 3px;
+  font-weight: 500;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  font-family: "Varela Round", sans-serif;
 }
 
 .robert .winner {
-    align-items: center;
-    padding-top: 5px;
+  align-items: center;
+  padding-top: 5px;
 }
 
 .winnerMode {
-    background-color: #ADADAD;
+  background-color: #adadad;
 }
 
 .robert .winner .replay {
-    transition: font-size 0.2s;
-    cursor: pointer;
-    color: chocolate;
-    padding-top: 5px;
+  transition: font-size 0.2s;
+  cursor: pointer;
+  color: chocolate;
+  padding-top: 5px;
 }
 
 .robert .winner .replay:hover {
-    font-size: 1.7rem;
+  font-size: 1.7rem;
 }

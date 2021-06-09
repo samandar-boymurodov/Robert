@@ -1,15 +1,16 @@
 .box {
-    width: 100px;
-    height: 100px;
-    border: 2px solid #ADADAD;
-    border-radius: 3px;
-    font-family: sans-serif;
-    font-size: 5.5rem;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.5s;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #adadad;
+  border-radius: 3px;
+  font-family: sans-serif;
+  font-size: 5.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.5s;
+  font-family: "Varela Round", sans-serif;
 }
 
 .box:hover {
-    background-color: cornsilk;
+  background-color: cornsilk;
 }
